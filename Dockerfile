@@ -11,7 +11,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Baixe os recursos necessários do NLTK
-RUN python -m nltk.downloader wordnet omw-1.4
+RUN python -c "import nltk; nltk.download('wordnet'); nltk.download('omw-1.4')"
 
 # Copie o código da aplicação para o container
 COPY ./app ./app
