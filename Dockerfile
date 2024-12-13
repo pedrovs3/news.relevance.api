@@ -7,11 +7,11 @@ WORKDIR /app
 # Copie o arquivo de dependências para o container
 COPY requirements.txt .
 
-# Instale as dependências
+# Instale as dependências do Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Baixe os recursos necessários do NLTK
-RUN python -c "import nltk; nltk.download('wordnet'); nltk.download('omw-1.4')"
+# Certifique-se de baixar os recursos do NLTK
+RUN python -m nltk.downloader wordnet omw-1.4
 
 # Copie o código da aplicação para o container
 COPY ./app ./app
