@@ -1,24 +1,23 @@
-# Use uma imagem base oficial do Python
+# Use a imagem base oficial do Python
 FROM python:3.10-slim
 
-# Definir o diretório de trabalho dentro do container
+# Defina o diretório de trabalho no container
 WORKDIR /app
 
-# Copiar o arquivo de dependências
+# Copie o arquivo de dependências para o container
 COPY requirements.txt .
 
-# Instalar dependências
+# Instale as dependências
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar o código da aplicação para o container
+# Baixe os recursos necessários do NLTK
+RUN python -m nltk.downloader wordnet omw-1.4
+
+# Copie o código da aplicação para o container
 COPY ./app ./app
 
-# Expor a porta que o FastAPI usa
+# Expor a porta que o FastAPI usará
 EXPOSE 3000
 
 # Comando para rodar a aplicação
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "3000"]
-FROM ubuntu:latest
-LABEL authors="pedro"
-
-ENTRYPOINT ["top", "-b"]
